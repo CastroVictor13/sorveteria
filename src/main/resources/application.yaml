@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/sorveteria_estoque?useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: Anima123!
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
