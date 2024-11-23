@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/produto")  // Já está mapeado corretamente
+@RequestMapping("/produtos")  // Já está mapeado corretamente
 public class ProdutoController {
 
     @Autowired
@@ -26,7 +26,7 @@ public class ProdutoController {
     @GetMapping("/cadastrar")
     public String mostrarCadastroProduto(Model model) {
         model.addAttribute("produtoDTO", new ProdutoDTO()); // Cria um novo objeto ProdutoDTO
-        return "cadastrar-produto"; // Retorna a view cadastrar-produto.html
+        return "cadastrar-produto"; // Retorna a view cadastrar-produtos.html
     }
 
     @PostMapping("/cadastrar")
