@@ -46,11 +46,11 @@ public class ProdutoDTO {
     }
 
     public double getPeso() {
-        return peso; // Getter para peso
+        return peso;
     }
 
     public void setPeso(double peso) {
-        this.peso = peso; // Setter para peso
+        this.peso = peso;
     }
 
     // Método para converter de objeto para entidade
@@ -65,9 +65,9 @@ public class ProdutoDTO {
     }
 
     // Método para converter de entidade para objeto
-    public Produto toEntity() {
+    public Produto toEntity(ProdutoDTO produtoDTO) {
         Produto produto = new Produto();
-        produto.setId(this.id); // Preserva o ID
+        produto.setId(this.id);
         produto.setNome(this.nome);
         produto.setCategoria(this.categoria);
         produto.setPreco(this.preco);

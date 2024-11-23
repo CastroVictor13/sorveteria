@@ -15,12 +15,12 @@ import java.util.stream.Collectors;
 public class ProdutoService {
 
     @Autowired
-    private ProdutoRepository produtoRepository; // Injeção do ProdutoRepository
+    private ProdutoRepository produtoRepository;
 
     public List<ProdutoDTO> listarProdutos() {
-        List<Produto> produtos = produtoRepository.findAll(); // Usa o método findAll do repositório
+        List<Produto> produtos = produtoRepository.findAll();
         return produtos.stream()
-                .map(this::converterParaDTO) // Converte Produto para ProdutoDTO
+                .map(this::converterParaDTO)
                 .collect(Collectors.toList());
     }
 
@@ -43,7 +43,7 @@ public class ProdutoService {
         Optional<Produto> produtoExistente = produtoRepository.findById(id);
         if (produtoExistente.isPresent()) {
             Produto produtoAtualizado = converterParaEntity(produtoDTO);
-            produtoAtualizado.setId(id); // Mantém o ID do produto existente
+            produtoAtualizado.setId(id);
             produtoRepository.save(produtoAtualizado);
             return converterParaDTO(produtoAtualizado);
         } else {
@@ -61,23 +61,12 @@ public class ProdutoService {
 
     // Método auxiliar para converter objeto para entidade
     private ProdutoDTO converterParaDTO(Produto produto) {
-        ProdutoDTO produtoDTO = new ProdutoDTO();
-        produtoDTO.setId(produto.getId());
-        produtoDTO.setNome(produto.getNome());
-        produtoDTO.setCategoria(produto.getCategoria());
-        produtoDTO.setPreco(produto.getPreco());
-        produtoDTO.setPeso(produto.getPeso());
-        return produtoDTO;
+        return ProdutoDTO.fromEntity(produto);
     }
 
     // Método auxiliar para converter entidade para objeto
     private Produto converterParaEntity(ProdutoDTO produtoDTO) {
-        Produto produto = new Produto();
-        produto.setNome(produtoDTO.getNome());
-        produto.setCategoria(produtoDTO.getCategoria());
-        produto.setPreco(produtoDTO.getPreco());
-        produto.setPeso(produtoDTO.getPeso());
-        return produto;
+        return produtoDTO.toEntity(produtoDTO);
     }
 
     public List<ProdutoDTO> buscarProdutosPorNome(String nome) {
