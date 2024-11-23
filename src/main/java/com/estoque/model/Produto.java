@@ -5,8 +5,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-import java.util.List;
-
 @Entity
 public class Produto {
 
@@ -18,6 +16,16 @@ public class Produto {
     private String categoria;
     private double preco;
     private double peso;
+    private int quantidade;
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
 
     public Produto() {
     }
