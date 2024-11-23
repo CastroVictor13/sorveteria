@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/produtos")  // Já está mapeado corretamente
+@RequestMapping("/produtos")
 public class ProdutoController {
 
     @Autowired
@@ -20,18 +20,18 @@ public class ProdutoController {
     public String mostrarProdutos(Model model) {
         List<ProdutoDTO> produtos = produtoService.listarProdutos();
         model.addAttribute("produtos", produtos);
-        return "produtos"; // Retorna a view produtos.html
+        return "produtos";
     }
 
     @GetMapping("/cadastrar")
     public String mostrarCadastroProduto(Model model) {
-        model.addAttribute("produtoDTO", new ProdutoDTO()); // Cria um novo objeto ProdutoDTO
-        return "cadastrar-produto"; // Retorna a view cadastrar-produtos.html
+        model.addAttribute("produtoDTO", new ProdutoDTO());
+        return "cadastrarProduto";
     }
 
     @PostMapping("/cadastrar")
     public String cadastrarProduto(@ModelAttribute ProdutoDTO produtoDTO) {
         produtoService.salvarProduto(produtoDTO);
-        return "redirect:/produto"; // Redireciona para a lista de produtos após o cadastro
+        return "redirect:/produtos";
     }
 }
