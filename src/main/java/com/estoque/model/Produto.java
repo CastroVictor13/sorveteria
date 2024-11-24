@@ -58,8 +58,12 @@ public class Produto {
         return volume;
     }
 
-    public void setVolume(double volume) {
-        this.volume = volume;
+    public void setVolume(Double volume) {
+        if (volume != null) {
+            this.volume = volume;
+        } else {
+            this.volume = 0.0;
+        }
     }
 
     public int getQuantidade() {

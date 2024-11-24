@@ -8,7 +8,7 @@ public class ProdutoDTO {
     private String nome;
     private String categoria;
     private double preco;
-    private double volume;
+    private Double volume; // Usando Double para permitir null
     private int quantidade;
 
     public ProdutoDTO() {
@@ -46,11 +46,11 @@ public class ProdutoDTO {
         this.preco = preco;
     }
 
-    public double getVolume() {
+    public Double getVolume() {
         return volume;
     }
 
-    public void setVolume(double volume) {
+    public void setVolume(Double volume) {
         this.volume = volume;
     }
 
@@ -62,7 +62,6 @@ public class ProdutoDTO {
         this.quantidade = quantidade;
     }
 
-    // Método para converter de objeto para DTO
     public static ProdutoDTO fromEntity(Produto produto) {
         ProdutoDTO produtoDTO = new ProdutoDTO();
         produtoDTO.setId(produto.getId());
@@ -74,15 +73,18 @@ public class ProdutoDTO {
         return produtoDTO;
     }
 
-    // Método para converter de DTO para entidade
     public Produto toEntity() {
         Produto produto = new Produto();
-        produto.setId(this.id);
         produto.setNome(this.nome);
         produto.setCategoria(this.categoria);
         produto.setPreco(this.preco);
-        produto.setVolume(this.volume);
         produto.setQuantidade(this.quantidade);
+        if (this.volume != null) {
+            produto.setVolume(this.volume);
+        } else {
+            produto.setVolume(0.0);
+        }
         return produto;
     }
+
 }

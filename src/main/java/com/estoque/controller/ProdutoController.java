@@ -7,8 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/produtos")
 public class ProdutoController {
@@ -18,8 +16,7 @@ public class ProdutoController {
 
     @GetMapping
     public String mostrarProdutos(Model model) {
-        List<ProdutoDTO> produtos = produtoService.listarProdutos();
-        model.addAttribute("produtos", produtos);
+        model.addAttribute("produtos", produtoService.listarProdutos());
         return "produtos";
     }
 
@@ -32,10 +29,11 @@ public class ProdutoController {
     @PostMapping("/cadastrar")
     public String cadastrarProduto(@ModelAttribute ProdutoDTO produtoDTO) {
         if ("Picolé".equals(produtoDTO.getCategoria())) {
-            produtoDTO.setVolume(0);
-        } else {
-            int volumeCalculado = produtoDTO.getQuantidade() * 2;
-            produtoDTO.setVolume(volumeCalculado);
+            produtoDTO.setVolume(null);
+        } else if ("Sorvete".equals(produtoDTO.getCategoria())) {
+            if (produtoDTO.getQuantidade() > 0) {
+                produtoDTO.setVolume((double) (produtoDTO.getQuantidade() * 2));
+            }
         }
 
         produtoService.salvarProduto(produtoDTO);
@@ -52,10 +50,11 @@ public class ProdutoController {
     @PostMapping("/editar/{id}")
     public String atualizarProduto(@PathVariable Long id, @ModelAttribute ProdutoDTO produtoDTO) {
         if ("Picolé".equals(produtoDTO.getCategoria())) {
-            produtoDTO.setVolume(0);
-        } else {
-            int volumeCalculado = produtoDTO.getQuantidade() * 2;
-            produtoDTO.setVolume(volumeCalculado);
+            produtoDTO.setVolume(null); // Deixa o volume nulo para Picolé
+        } else if ("Sorvete".equals(produtoDTO.getCategoria())) {
+            if (produtoDTO.getQuantidade() > 0) {
+                produtoDTO.setVolume(produtoDTO.getQuantidade() * 2.0); // Volume calculado para Sorvete
+            }
         }
 
         produtoService.atualizarProduto(id, produtoDTO);

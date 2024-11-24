@@ -18,8 +18,7 @@ public class ProdutoService {
     private ProdutoRepository produtoRepository;
 
     public List<ProdutoDTO> listarProdutos() {
-        List<Produto> produtos = produtoRepository.findAll();
-        return produtos.stream()
+        return produtoRepository.findAll().stream()
                 .map(this::converterParaDTO)
                 .collect(Collectors.toList());
     }
@@ -36,8 +35,11 @@ public class ProdutoService {
     public ProdutoDTO salvarProduto(ProdutoDTO produtoDTO) {
         Produto produto = converterParaEntity(produtoDTO);
 
-        if ("sorvete".equalsIgnoreCase(produtoDTO.getCategoria())) {
-            produto.setVolume(produtoDTO.getQuantidade() * 2.0);  // Volume = Quantidade * 2
+        // Para Picolé, o volume não é necessário, então é setado como null
+        if ("Picolé".equalsIgnoreCase(produtoDTO.getCategoria())) {
+            produto.setVolume(null);
+        } else if ("Sorvete".equalsIgnoreCase(produtoDTO.getCategoria()) && produtoDTO.getQuantidade() > 0) {
+            produto.setVolume((double) (produtoDTO.getQuantidade() * 2)); // Calcula o volume para Sorvete
         }
 
         Produto novoProduto = produtoRepository.save(produto);
@@ -50,9 +52,10 @@ public class ProdutoService {
             Produto produtoAtualizado = converterParaEntity(produtoDTO);
             produtoAtualizado.setId(id);
 
-            // Ajuste automático do volume para "Sorvete"
-            if ("sorvete".equalsIgnoreCase(produtoDTO.getCategoria())) {
-                produtoAtualizado.setVolume(produtoDTO.getQuantidade() * 2.0);  // Volume = Quantidade * 2
+            if ("Picolé".equalsIgnoreCase(produtoDTO.getCategoria())) {
+                produtoAtualizado.setVolume(null);
+            } else if ("Sorvete".equalsIgnoreCase(produtoDTO.getCategoria()) && produtoDTO.getQuantidade() > 0) {
+                produtoAtualizado.setVolume((double) (produtoDTO.getQuantidade() * 2)); // Calcula o volume para Sorvete
             }
 
             produtoRepository.save(produtoAtualizado);
@@ -76,19 +79,5 @@ public class ProdutoService {
 
     private Produto converterParaEntity(ProdutoDTO produtoDTO) {
         return produtoDTO.toEntity();
-    }
-
-    public List<ProdutoDTO> buscarProdutosPorNome(String nome) {
-        List<Produto> produtos = produtoRepository.findByNomeContainingIgnoreCase(nome);
-        return produtos.stream()
-                .map(this::converterParaDTO)
-                .collect(Collectors.toList());
-    }
-
-    public List<ProdutoDTO> buscarProdutosPorCategoria(String categoria) {
-        List<Produto> produtos = produtoRepository.findByCategoria(categoria);
-        return produtos.stream()
-                .map(this::converterParaDTO)
-                .collect(Collectors.toList());
     }
 }
