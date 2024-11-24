@@ -12,34 +12,67 @@
         .container {
             margin-top: 20px;
         }
+        .table-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .spacer {
+            margin-bottom: 40px; /* Espaçamento entre o botão de editar e o container */
+        }
+        .btn-container {
+            display: flex;
+            justify-content: flex-start; /* Alinha os botões à esquerda */
+            gap: 15px; /* Espaçamento entre os botões */
+        }
+        .edit-btn {
+            margin-top: 40px; /* Adiciona o espaçamento desejado entre o botão de editar e o container */
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <h2 class="text-center mb-4">Gerenciamento de Produtos</h2>
-    <div class="text-center mb-3">
-        <button class="btn btn-success" onclick="window.location.href='/produtos/cadastrar'">Adicionar Produto</button>
+    <div class="table-container">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Categoria</th>
+                <th>Quantidade</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Thymeleaf para listar os produtos -->
+            <tr th:each="produto : ${produtos}">
+                <td th:text="${produto.id}"></td>
+                <td th:text="${produto.nome}"></td>
+                <td th:text="${produto.categoria}"></td>
+                <td th:text="${produto.quantidade}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Categoria</th>
-            <th>Quantidade</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Thymeleaf para listar os produtos -->
-        <tr th:each="produto : ${produtos}">
-            <td th:text="${produto.id}"></td>
-            <td th:text="${produto.nome}"></td>
-            <td th:text="${produto.categoria}"></td>
-            <td th:text="${produto.quantidade}"></td>
-        </tr>
-        </tbody>
-    </table>
+
+    <!-- Botões de Editar e Excluir no rodapé -->
+    <div class="btn-container edit-btn">
+        <!-- Botão de Editar Produto -->
+        <a href="/produtos/cadastrar" class="btn btn-primary">Editar Produto</a>
+    </div>
+
+    <!-- Formulário para exclusão por ID -->
+    <h4 class="text-center">Excluir Produto por ID</h4>
+    <form th:action="@{/produtos/excluirProduto}" method="post" class="mb-3">
+        <div class="mb-3">
+            <label for="idProduto" class="form-label">ID do Produto</label>
+            <input type="number" id="idProduto" name="id" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-danger">Excluir</button>
+    </form>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
