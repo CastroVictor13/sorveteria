@@ -35,6 +35,11 @@ public class ProdutoService {
 
     public ProdutoDTO salvarProduto(ProdutoDTO produtoDTO) {
         Produto produto = converterParaEntity(produtoDTO);
+
+        if ("sorvete".equalsIgnoreCase(produtoDTO.getCategoria())) {
+            produto.setVolume(produtoDTO.getQuantidade() * 2.0);  // Volume = Quantidade * 2
+        }
+
         Produto novoProduto = produtoRepository.save(produto);
         return converterParaDTO(novoProduto);
     }
@@ -44,6 +49,12 @@ public class ProdutoService {
         if (produtoExistente.isPresent()) {
             Produto produtoAtualizado = converterParaEntity(produtoDTO);
             produtoAtualizado.setId(id);
+
+            // Ajuste automático do volume para "Sorvete"
+            if ("sorvete".equalsIgnoreCase(produtoDTO.getCategoria())) {
+                produtoAtualizado.setVolume(produtoDTO.getQuantidade() * 2.0);  // Volume = Quantidade * 2
+            }
+
             produtoRepository.save(produtoAtualizado);
             return converterParaDTO(produtoAtualizado);
         } else {
@@ -59,14 +70,12 @@ public class ProdutoService {
         }
     }
 
-    // Método auxiliar para converter objeto para DTO
     private ProdutoDTO converterParaDTO(Produto produto) {
         return ProdutoDTO.fromEntity(produto);
     }
 
-    // Método auxiliar para converter DTO para entidade
     private Produto converterParaEntity(ProdutoDTO produtoDTO) {
-        return produtoDTO.toEntity(); // Ajuste aqui: não é mais necessário passar o parâmetro
+        return produtoDTO.toEntity();
     }
 
     public List<ProdutoDTO> buscarProdutosPorNome(String nome) {
@@ -76,7 +85,6 @@ public class ProdutoService {
                 .collect(Collectors.toList());
     }
 
-    // Método para buscar produtos por categoria
     public List<ProdutoDTO> buscarProdutosPorCategoria(String categoria) {
         List<Produto> produtos = produtoRepository.findByCategoria(categoria);
         return produtos.stream()

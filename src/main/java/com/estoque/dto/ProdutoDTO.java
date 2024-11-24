@@ -8,8 +8,8 @@ public class ProdutoDTO {
     private String nome;
     private String categoria;
     private double preco;
-    private double peso;
-    private int quantidade; // Incluindo quantidade de estoque
+    private double volume;
+    private int quantidade;
 
     public ProdutoDTO() {
     }
@@ -46,12 +46,12 @@ public class ProdutoDTO {
         this.preco = preco;
     }
 
-    public double getPeso() {
-        return peso;
+    public double getVolume() {
+        return volume;
     }
 
-    public void setPeso(double peso) {
-        this.peso = peso;
+    public void setVolume(double volume) {
+        this.volume = volume;
     }
 
     public int getQuantidade() {
@@ -69,8 +69,8 @@ public class ProdutoDTO {
         produtoDTO.setNome(produto.getNome());
         produtoDTO.setCategoria(produto.getCategoria());
         produtoDTO.setPreco(produto.getPreco());
-        produtoDTO.setPeso(produto.getPeso());
-        produtoDTO.setQuantidade(produto.getQuantidade()); // Incluindo quantidade
+        produtoDTO.setVolume(produto.getVolume());
+        produtoDTO.setQuantidade(produto.getQuantidade());
         return produtoDTO;
     }
 
@@ -81,8 +81,8 @@ public class ProdutoDTO {
         produto.setNome(this.nome);
         produto.setCategoria(this.categoria);
         produto.setPreco(this.preco);
-        produto.setPeso(this.peso);
-        produto.setQuantidade(this.quantidade); // Passando a quantidade
+        produto.setVolume(this.volume);
+        produto.setQuantidade(this.quantidade);
         return produto;
     }
 }

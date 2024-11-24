@@ -31,7 +31,40 @@ public class ProdutoController {
 
     @PostMapping("/cadastrar")
     public String cadastrarProduto(@ModelAttribute ProdutoDTO produtoDTO) {
+        if ("Picolé".equals(produtoDTO.getCategoria())) {
+            produtoDTO.setVolume(0);
+        } else {
+            int volumeCalculado = produtoDTO.getQuantidade() * 2;
+            produtoDTO.setVolume(volumeCalculado);
+        }
+
         produtoService.salvarProduto(produtoDTO);
+        return "redirect:/produtos";
+    }
+
+    @GetMapping("/editar/{id}")
+    public String editarProduto(@PathVariable Long id, Model model) {
+        ProdutoDTO produtoDTO = produtoService.buscarProdutoPorId(id);
+        model.addAttribute("produtoDTO", produtoDTO);
+        return "editarProduto";
+    }
+
+    @PostMapping("/editar/{id}")
+    public String atualizarProduto(@PathVariable Long id, @ModelAttribute ProdutoDTO produtoDTO) {
+        if ("Picolé".equals(produtoDTO.getCategoria())) {
+            produtoDTO.setVolume(0);
+        } else {
+            int volumeCalculado = produtoDTO.getQuantidade() * 2;
+            produtoDTO.setVolume(volumeCalculado);
+        }
+
+        produtoService.atualizarProduto(id, produtoDTO);
+        return "redirect:/produtos";
+    }
+
+    @PostMapping("/excluir")
+    public String excluirProduto(@RequestParam Long id) {
+        produtoService.deletarProduto(id);
         return "redirect:/produtos";
     }
 }

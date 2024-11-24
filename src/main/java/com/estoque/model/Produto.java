@@ -15,17 +15,8 @@ public class Produto {
     private String nome;
     private String categoria;
     private double preco;
-    private double peso;
+    private double volume;
     private int quantidade;
-
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
-
 
     public Produto() {
     }
@@ -63,11 +54,19 @@ public class Produto {
         this.preco = preco;
     }
 
-    public double getPeso() {
-        return peso;
+    public double getVolume() {
+        return volume;
     }
 
-    public void setPeso(double peso) {
-        this.peso = peso;
+    public void setVolume(double volume) {
+        this.volume = volume;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
     }
 }

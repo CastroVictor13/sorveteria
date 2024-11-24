@@ -18,22 +18,16 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .spacer {
-            margin-bottom: 40px; /* Espaçamento entre o botão de editar e o container */
-        }
-        .btn-container {
-            display: flex;
-            justify-content: flex-start; /* Alinha os botões à esquerda */
-            gap: 15px; /* Espaçamento entre os botões */
-        }
-        .edit-btn {
-            margin-top: 40px; /* Adiciona o espaçamento desejado entre o botão de editar e o container */
-        }
     </style>
 </head>
 <body>
 <div class="container">
     <h2 class="text-center mb-4">Gerenciamento de Produtos</h2>
+
+    <div class="text-center mb-4">
+        <a href="/produtos/cadastrar" class="btn btn-success">Cadastrar Novo Produto</a>
+    </div>
+
     <div class="table-container">
         <table class="table table-striped">
             <thead>
@@ -42,34 +36,36 @@
                 <th>Nome</th>
                 <th>Categoria</th>
                 <th>Quantidade</th>
+                <th>Volume</th>
+                <th>Ações</th>
             </tr>
             </thead>
             <tbody>
-            <!-- Thymeleaf para listar os produtos -->
+
             <tr th:each="produto : ${produtos}">
                 <td th:text="${produto.id}"></td>
                 <td th:text="${produto.nome}"></td>
                 <td th:text="${produto.categoria}"></td>
                 <td th:text="${produto.quantidade}"></td>
+                <td th:text="${produto.volume}"></td>
+                <td>
+
+                    <a th:href="@{/produtos/editar/{id}(id=${produto.id})}" class="btn btn-warning">Editar</a>
+                </td>
             </tr>
             </tbody>
         </table>
     </div>
 
-    <!-- Botões de Editar e Excluir no rodapé -->
-    <div class="btn-container edit-btn">
-        <!-- Botão de Editar Produto -->
-        <a href="/produtos/cadastrar" class="btn btn-primary">Editar Produto</a>
-    </div>
-
-    <!-- Formulário para exclusão por ID -->
     <h4 class="text-center">Excluir Produto por ID</h4>
-    <form th:action="@{/produtos/excluirProduto}" method="post" class="mb-3">
+    <form th:action="@{/produtos/excluir}" method="post" class="mb-3">
         <div class="mb-3">
             <label for="idProduto" class="form-label">ID do Produto</label>
             <input type="number" id="idProduto" name="id" class="form-control" required />
         </div>
-        <button type="submit" class="btn btn-danger">Excluir</button>
+        <div class="text-center">
+            <button type="submit" class="btn btn-danger">Excluir Produto</button>
+        </div>
     </form>
 </div>
 
