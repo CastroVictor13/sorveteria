@@ -26,10 +26,17 @@
             <th>ID</th>
             <th>Nome</th>
             <th>Categoria</th>
-            <th>Ações</th>
+            <th>Quantidade</th>
         </tr>
         </thead>
-        <tbody id="produtoTableBody">
+        <tbody>
+        <!-- Thymeleaf para listar os produtos -->
+        <tr th:each="produto : ${produtos}">
+            <td th:text="${produto.id}"></td>
+            <td th:text="${produto.nome}"></td>
+            <td th:text="${produto.categoria}"></td>
+            <td th:text="${produto.quantidade}"></td>
+        </tr>
         </tbody>
     </table>
 </div>

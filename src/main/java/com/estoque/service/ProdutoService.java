@@ -59,14 +59,14 @@ public class ProdutoService {
         }
     }
 
-    // Método auxiliar para converter objeto para entidade
+    // Método auxiliar para converter objeto para DTO
     private ProdutoDTO converterParaDTO(Produto produto) {
         return ProdutoDTO.fromEntity(produto);
     }
 
-    // Método auxiliar para converter entidade para objeto
+    // Método auxiliar para converter DTO para entidade
     private Produto converterParaEntity(ProdutoDTO produtoDTO) {
-        return produtoDTO.toEntity(produtoDTO);
+        return produtoDTO.toEntity(); // Ajuste aqui: não é mais necessário passar o parâmetro
     }
 
     public List<ProdutoDTO> buscarProdutosPorNome(String nome) {

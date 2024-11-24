@@ -9,6 +9,7 @@ public class ProdutoDTO {
     private String categoria;
     private double preco;
     private double peso;
+    private int quantidade; // Incluindo quantidade de estoque
 
     public ProdutoDTO() {
     }
@@ -53,7 +54,15 @@ public class ProdutoDTO {
         this.peso = peso;
     }
 
-    // Método para converter de objeto para entidade
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    // Método para converter de objeto para DTO
     public static ProdutoDTO fromEntity(Produto produto) {
         ProdutoDTO produtoDTO = new ProdutoDTO();
         produtoDTO.setId(produto.getId());
@@ -61,17 +70,19 @@ public class ProdutoDTO {
         produtoDTO.setCategoria(produto.getCategoria());
         produtoDTO.setPreco(produto.getPreco());
         produtoDTO.setPeso(produto.getPeso());
+        produtoDTO.setQuantidade(produto.getQuantidade()); // Incluindo quantidade
         return produtoDTO;
     }
 
-    // Método para converter de entidade para objeto
-    public Produto toEntity(ProdutoDTO produtoDTO) {
+    // Método para converter de DTO para entidade
+    public Produto toEntity() {
         Produto produto = new Produto();
         produto.setId(this.id);
         produto.setNome(this.nome);
         produto.setCategoria(this.categoria);
         produto.setPreco(this.preco);
         produto.setPeso(this.peso);
+        produto.setQuantidade(this.quantidade); // Passando a quantidade
         return produto;
     }
 }
