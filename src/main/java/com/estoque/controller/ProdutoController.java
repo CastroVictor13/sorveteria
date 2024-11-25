@@ -29,11 +29,7 @@ public class ProdutoController {
     @PostMapping("/cadastrar")
     public String cadastrarProduto(@ModelAttribute ProdutoDTO produtoDTO) {
         if ("Picolé".equals(produtoDTO.getCategoria())) {
-            produtoDTO.setVolume(null);
-        } else if ("Sorvete".equals(produtoDTO.getCategoria())) {
-            if (produtoDTO.getQuantidade() > 0) {
-                produtoDTO.setVolume((double) (produtoDTO.getQuantidade() * 2));
-            }
+            produtoDTO.setVolume(null); // Volume nulo para Picolé
         }
 
         produtoService.salvarProduto(produtoDTO);
@@ -50,11 +46,7 @@ public class ProdutoController {
     @PostMapping("/editar/{id}")
     public String atualizarProduto(@PathVariable Long id, @ModelAttribute ProdutoDTO produtoDTO) {
         if ("Picolé".equals(produtoDTO.getCategoria())) {
-            produtoDTO.setVolume(null); // Deixa o volume nulo para Picolé
-        } else if ("Sorvete".equals(produtoDTO.getCategoria())) {
-            if (produtoDTO.getQuantidade() > 0) {
-                produtoDTO.setVolume(produtoDTO.getQuantidade() * 2.0); // Volume calculado para Sorvete
-            }
+            produtoDTO.setVolume(null); // Volume nulo para Picolé
         }
 
         produtoService.atualizarProduto(id, produtoDTO);

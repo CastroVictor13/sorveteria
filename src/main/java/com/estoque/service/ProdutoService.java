@@ -19,65 +19,37 @@ public class ProdutoService {
 
     public List<ProdutoDTO> listarProdutos() {
         return produtoRepository.findAll().stream()
-                .map(this::converterParaDTO)
+                .map(ProdutoDTO::fromEntity)
                 .collect(Collectors.toList());
     }
 
     public ProdutoDTO buscarProdutoPorId(Long id) {
-        Optional<Produto> produto = produtoRepository.findById(id);
-        if (produto.isPresent()) {
-            return converterParaDTO(produto.get());
-        } else {
-            throw new ResourceNotFoundException("Produto não encontrado com o ID: " + id);
-        }
-    }
-
-    public ProdutoDTO salvarProduto(ProdutoDTO produtoDTO) {
-        Produto produto = converterParaEntity(produtoDTO);
-
-        // Para Picolé, o volume não é necessário, então é setado como null
-        if ("Picolé".equalsIgnoreCase(produtoDTO.getCategoria())) {
-            produto.setVolume(null);
-        } else if ("Sorvete".equalsIgnoreCase(produtoDTO.getCategoria()) && produtoDTO.getQuantidade() > 0) {
-            produto.setVolume((double) (produtoDTO.getQuantidade() * 2)); // Calcula o volume para Sorvete
-        }
-
-        Produto novoProduto = produtoRepository.save(produto);
-        return converterParaDTO(novoProduto);
-    }
-
-    public ProdutoDTO atualizarProduto(Long id, ProdutoDTO produtoDTO) {
-        Optional<Produto> produtoExistente = produtoRepository.findById(id);
-        if (produtoExistente.isPresent()) {
-            Produto produtoAtualizado = converterParaEntity(produtoDTO);
-            produtoAtualizado.setId(id);
-
-            if ("Picolé".equalsIgnoreCase(produtoDTO.getCategoria())) {
-                produtoAtualizado.setVolume(null);
-            } else if ("Sorvete".equalsIgnoreCase(produtoDTO.getCategoria()) && produtoDTO.getQuantidade() > 0) {
-                produtoAtualizado.setVolume((double) (produtoDTO.getQuantidade() * 2)); // Calcula o volume para Sorvete
-            }
-
-            produtoRepository.save(produtoAtualizado);
-            return converterParaDTO(produtoAtualizado);
-        } else {
-            throw new ResourceNotFoundException("Produto não encontrado com o ID: " + id);
-        }
-    }
-
-    public void deletarProduto(Long id) {
-        if (produtoRepository.existsById(id)) {
-            produtoRepository.deleteById(id);
-        } else {
-            throw new ResourceNotFoundException("Produto não encontrado com o ID: " + id);
-        }
-    }
-
-    private ProdutoDTO converterParaDTO(Produto produto) {
+        Produto produto = produtoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado com o ID: " + id));
         return ProdutoDTO.fromEntity(produto);
     }
 
-    private Produto converterParaEntity(ProdutoDTO produtoDTO) {
-        return produtoDTO.toEntity();
+    public ProdutoDTO salvarProduto(ProdutoDTO produtoDTO) {
+        Produto produto = produtoDTO.toEntity();
+        Produto produtoSalvo = produtoRepository.save(produto);
+        return ProdutoDTO.fromEntity(produtoSalvo);
+    }
+
+    public ProdutoDTO atualizarProduto(Long id, ProdutoDTO produtoDTO) {
+        if (!produtoRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Produto não encontrado com o ID: " + id);
+        }
+
+        Produto produtoAtualizado = produtoDTO.toEntity();
+        produtoAtualizado.setId(id);
+        produtoRepository.save(produtoAtualizado);
+        return ProdutoDTO.fromEntity(produtoAtualizado);
+    }
+
+    public void deletarProduto(Long id) {
+        if (!produtoRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Produto não encontrado com o ID: " + id);
+        }
+        produtoRepository.deleteById(id);
     }
 }

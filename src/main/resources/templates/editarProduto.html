@@ -43,7 +43,9 @@
         </div>
         <div class="mb-3">
             <label for="volume" class="form-label">Volume</label>
-            <input type="number" class="form-control" id="volume" name="volume" th:value="${produtoDTO.getVolume()}" required readonly>
+            <!-- Se a categoria for Picolé, o campo ficará desabilitado -->
+            <input type="number" class="form-control" id="volume" name="volume" th:value="${produtoDTO.volume}"
+                   th:disabled="${produtoDTO.categoria == 'Picolé'}" required>
         </div>
         <div class="text-center">
             <button type="submit" class="btn btn-primary">Atualizar</button>

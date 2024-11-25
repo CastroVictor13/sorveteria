@@ -25,7 +25,7 @@
   <h2 class="text-center mb-4">Cadastrar Produto</h2>
   <form th:action="@{/produtos/cadastrar}" method="post">
     <div class="mb-3">
-      <label for="nome" class="form-label">Nome</label>
+      <label for="nome" class="form-label">Sabor</label>
       <input type="text" class="form-control" id="nome" name="nome" required>
     </div>
     <div class="mb-3">
@@ -38,10 +38,9 @@
     <div class="mb-3">
       <label for="quantidade" class="form-label">Quantidade</label>
       <input type="number" class="form-control" id="quantidade" name="quantidade" min="0" required>
-      <small>Para Sorvete, 1 unidade é equivalente a 2L</small>
     </div>
     <div class="mb-3">
-      <label for="volume" class="form-label">Volume</label>
+      <label for="volume" class="form-label">Volume (Litros)</label>
       <input type="number" class="form-control" id="volume" name="volume">
       <small>Esse campo deve ser preenchido apenas para Sorvete</small>
     </div>
