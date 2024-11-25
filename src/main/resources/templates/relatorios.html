@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produtos - Gerenciamento de Estoque</title>
+    <title>Relatórios - Gerenciamento de Estoque</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -24,20 +24,14 @@
         .form-label {
             font-weight: bold;
         }
-        .excluir-container {
-            margin-top: 40px;
-        }
-        .relatorios-container {
-            margin-top: 20px;
-            text-align: center;
-        }
     </style>
 </head>
 <body>
 <div class="container">
-    <h2 class="text-center mb-4">Gerenciamento de Produtos</h2>
+    <h2 class="text-center mb-4">Relatórios de Produtos</h2>
+
     <div class="text-center mb-4">
-        <a th:href="@{/produtos/cadastrar}" class="btn btn-success">Cadastrar Novo Produto</a>
+        <a href="/produtos" class="btn btn-secondary">Voltar para Produtos</a>
     </div>
 
     <div class="table-container">
@@ -50,7 +44,6 @@
                 <th>Quantidade</th>
                 <th>Volume (Litros)</th>
                 <th>Total</th>
-                <th>Ações</th>
             </tr>
             </thead>
             <tbody>
@@ -61,37 +54,9 @@
                 <td th:text="${produto.quantidade}"></td>
                 <td th:text="${produto.volume}"></td>
                 <td th:text="${produto.categoria == 'Sorvete' ? produto.quantidade * produto.volume + ' litros' : produto.quantidade + ' unidades'}"></td>
-                <td>
-                    <a th:href="@{/produtos/editar/{id}(id=${produto.id})}" class="btn btn-warning">Editar</a>
-                </td>
             </tr>
             </tbody>
         </table>
-    </div>
-
-    <!-- Botões de Relatórios -->
-    <div class="relatorios-container">
-        <h3>Gerar Relatórios</h3>
-        <div class="btn-group">
-            <a th:href="@{/produtos/relatorios(relatorio=1)}" class="btn btn-info">Produtos com Total abaixo de 20</a>
-            <a th:href="@{/produtos/relatorios(relatorio=2)}" class="btn btn-info">Produtos com Estoque acima de 100</a>
-            <a th:href="@{/produtos/relatorios(relatorio=3)}" class="btn btn-info">Produtos de Picolé</a>
-            <a th:href="@{/produtos/relatorios(relatorio=4)}" class="btn btn-info">Produtos de Sorvete</a>
-        </div>
-    </div>
-
-    <!-- Formulário para Excluir Produto -->
-    <div class="excluir-container">
-        <h4 class="text-center">Excluir Produto</h4>
-        <form th:action="@{/produtos/excluir}" method="post" class="mb-3">
-            <div class="mb-3">
-                <label for="idProduto" class="form-label">ID do Produto</label>
-                <input type="number" id="idProduto" name="id" class="form-control" required />
-            </div>
-            <div class="text-center">
-                <button type="submit" class="btn btn-danger">Excluir Produto</button>
-            </div>
-        </form>
     </div>
 </div>
 

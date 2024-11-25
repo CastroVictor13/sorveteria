@@ -8,7 +8,7 @@ public class ProdutoDTO {
     private String nome;
     private String categoria;
     private double preco;
-    private Double volume; // Pode ser nulo
+    private Double volume;
     private int quantidade;
 
     public ProdutoDTO() {
@@ -80,7 +80,6 @@ public class ProdutoDTO {
         produto.setPreco(this.preco);
         produto.setQuantidade(this.quantidade);
 
-        // Volume é setado diretamente, mas pode ser nulo
         produto.setVolume(this.volume);
         return produto;
     }
