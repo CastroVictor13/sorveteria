@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produtos - Gerenciamento de Estoque</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body {
             background-color: darkgrey;
@@ -30,6 +31,14 @@
         .relatorios-container {
             margin-top: 20px;
             text-align: center;
+        }
+        .relatorios-container h3 {
+            margin-bottom: 20px;
+        }
+        .relatorios-container .btn {
+            width: 200px;
+            font-size: 16px;
+            padding: 10px;
         }
     </style>
 </head>
@@ -69,18 +78,24 @@
         </table>
     </div>
 
-    <!-- Botões de Relatórios -->
     <div class="relatorios-container">
         <h3>Gerar Relatórios</h3>
-        <div class="btn-group">
-            <a th:href="@{/produtos/relatorios(relatorio=1)}" class="btn btn-info">Produtos com Total abaixo de 20</a>
-            <a th:href="@{/produtos/relatorios(relatorio=2)}" class="btn btn-info">Produtos com Estoque acima de 100</a>
-            <a th:href="@{/produtos/relatorios(relatorio=3)}" class="btn btn-info">Produtos de Picolé</a>
-            <a th:href="@{/produtos/relatorios(relatorio=4)}" class="btn btn-info">Produtos de Sorvete</a>
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+            <a th:href="@{/produtos/relatorios(relatorio=1)}" class="btn btn-secondary">
+                <i class="bi bi-exclamation-circle"></i> Total abaixo de 20
+            </a>
+            <a th:href="@{/produtos/relatorios(relatorio=2)}" class="btn btn-secondary">
+                <i class="bi bi-graph-up"></i> Estoque acima de 100
+            </a>
+            <a th:href="@{/produtos/relatorios(relatorio=3)}" class="btn btn-secondary">
+                <i class="bi bi-box"></i> Produtos de Picolé
+            </a>
+            <a th:href="@{/produtos/relatorios(relatorio=4)}" class="btn btn-secondary">
+                <i class="bi bi-box"></i> Produtos de Sorvete
+            </a>
         </div>
     </div>
 
-    <!-- Formulário para Excluir Produto -->
     <div class="excluir-container">
         <h4 class="text-center">Excluir Produto</h4>
         <form th:action="@{/produtos/excluir}" method="post" class="mb-3">

@@ -74,7 +74,7 @@ public class ProdutoController {
     @PostMapping("/editar/{id}")
     public String atualizarProduto(@PathVariable Long id, @ModelAttribute ProdutoDTO produtoDTO) {
         if ("Picolé".equals(produtoDTO.getCategoria())) {
-            produtoDTO.setVolume(null); // Volume nulo para Picolé
+            produtoDTO.setVolume(null);
         }
 
         produtoService.atualizarProduto(id, produtoDTO);

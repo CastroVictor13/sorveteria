@@ -23,7 +23,6 @@
 <body>
 <div class="form-container">
     <h2 class="text-center mb-4">Editar Produto</h2>
-    <!-- Alteração no action para passar o id via URL -->
     <form th:action="@{/produtos/editar/{id}(id=${produtoDTO.id})}" method="post">
         <div class="mb-3">
             <label for="nome" class="form-label">Nome</label>
@@ -36,14 +35,12 @@
                 <option value="Picolé" th:selected="${produtoDTO.categoria == 'Picolé'}">Picolé</option>
             </select>
         </div>
-        <!-- Campo de Quantidade agora antes do campo de Volume -->
         <div class="mb-3">
             <label for="quantidade" class="form-label">Quantidade</label>
             <input type="number" class="form-control" id="quantidade" name="quantidade" th:value="${produtoDTO.quantidade}" min="0" required>
         </div>
         <div class="mb-3">
             <label for="volume" class="form-label">Volume</label>
-            <!-- Se a categoria for Picolé, o campo ficará desabilitado -->
             <input type="number" class="form-control" id="volume" name="volume" th:value="${produtoDTO.volume}"
                    th:disabled="${produtoDTO.categoria == 'Picolé'}" required>
         </div>
