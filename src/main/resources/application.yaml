@@ -3,10 +3,11 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
   datasource:
-    url: jdbc:mysql://localhost:3306/sorveteria_estoque?useSSL=false&allowPublicKeyRetrieval=true
-    username: root
-    password: Anima123!
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+    url: jdbc:postgresql://localhost:5432/sorveteria
+    username: postgres
+    password: 250308
+    driver-class-name: org.postgresql.Driver
+    jpa:
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+      hibernate:
+        ddl-auto: update
